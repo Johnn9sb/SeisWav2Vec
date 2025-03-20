@@ -1,18 +1,19 @@
-CUDA_VISIBLE_DEVICES=0,1,2,3 \
+CUDA_VISIBLE_DEVICES=0 \
 exec -a Johnn9_Finetune \
 python train.py \
---model_name 'data2vecpick_tune' \
+--model_name 'test' \
 --train_model 'wav2vec2' \
---batch_size 32 \
+--batch_size 1 \
 --num_workers 4 \
 --epochs 200 \
 --decoder_type 'cnn' \
 --freeze 'n' \
 --weighted_sum 'n' \
---lr 0.000003972 \
+--lr 0.0001 \
 --task 'pick' \
 --checkpoint_path "/mnt/nas3/johnn9/pretrain/data2vec/old/checkpoint_50000.pt" \
---resume 'true' \
+--dataset 'stead' \
+# --resume 'true' \
 
 # --checkpoint_path "None" \
 

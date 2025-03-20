@@ -33,7 +33,7 @@ parl = 'y'  # y,n
 mod_path = "/mnt/nas3/johnn9/checkpoint/"
 model_path = mod_path + model_name
 loadmodel = model_path + '/' + 'last_checkpoint.pt' 
-image_path = '/mnt/nas3/johnn9/test/graduate/'
+image_path = '/mnt/nas3/johnn9/test/graduate_after/'
 print("Init Complete!!!")
 # =========================================================================================================
 # DataLoad
@@ -52,11 +52,12 @@ start_time = time.time()
 # print(sorted_distances)
 # sys.exit()
 
-data_4_3_path = "/mnt/nas5/johnn9/CWBSN_seisbench/"
-test = sbd.WaveformDataset(data_4_3_path, sampling_rate=100)
+# data_4_3_path = "/mnt/nas5/johnn9/CWBSN_seisbench/"
+data_664_path = "/mnt/nas5/johnn9/seisbench_cache/datasets/cwbsn/"
+test = sbd.WaveformDataset(data_664_path, sampling_rate=100)
 # mask = test.metadata['station_code'] == 'HWA'
 # test.filter(mask)
-magmask = test.metadata['source_magnitude'] == 7.18
+magmask = test.metadata['source_magnitude'] == 6.64
 test.filter(magmask)
 # chamask = test.metadata['trace_channel'] == 'HL'
 # test.filter(chamask)
@@ -228,11 +229,11 @@ print("=====================================================")
 # =========================================================================================================
 # Testing
 
-print("Testing start!!!")
-print("Model weights:", model.module.weights)
-weights = F.softmax(model.module.weights,dim=0)
-print("Softmax weights:", weights)
-sys.exit()
+# print("Testing start!!!")
+# print("Model weights:", model.module.weights)
+# weights = F.softmax(model.module.weights,dim=0)
+# print("Softmax weights:", weights)
+# sys.exit()
 
 
 start_time = time.time()
@@ -273,11 +274,7 @@ labels = torch.cat(label, dim=0)
 print('preds.shape = ', preds.shape)
 print('labels.shape = ', labels.shape)
 
-
-
-gra_path = '/mnt/nas3/johnn9/experiment/graduate/datawei1000'
-
-
+gra_path = '/mnt/nas3/johnn9/experiment/graduate_after/' + args.model_name 
 
 if not os.path.isdir(gra_path):
     os.mkdir(gra_path)
@@ -286,5 +283,5 @@ la_path = gra_path + '/labels.pt'
 print(pr_path)
 torch.save(preds, pr_path)
 torch.save(labels, la_path)
-
+print("save compelete!!!")
 sys.exit()

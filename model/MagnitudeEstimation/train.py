@@ -250,7 +250,12 @@ if __name__ == '__main__':
             optimizer = optim.Adam(model.parameters(), opt.lr)
 
         train_set, dev_set = split_dataset(opt)
-
+        
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print('train = ', len(train_set))
+        print('dev = ', len(dev_set))
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        
         train_generator = set_generators(opt, train_set)
         dev_generator = set_generators(opt, dev_set)
 

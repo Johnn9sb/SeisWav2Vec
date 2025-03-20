@@ -348,6 +348,9 @@ if args.task == 'pick':
         s_precision = s_tp / (s_tp + s_fp)
         s_f1 = 2*((s_precision * s_recall)/(s_precision+s_recall))
     # Write Log
+    f.write(args.dataset + ' dataset')
+    f.write(args.dataset + ' dataset')
+    f.write(args.dataset + ' dataset')
     f.write('==================================================' + '\n')
     f.write('Threshold = ' + str(threshold) + '\n')
     f.write('P-phase precision = ' + str(p_precision) + '\n')
@@ -372,6 +375,9 @@ if args.task == 'pick':
     f.write('S-phase tn = ' + str(s_tn) + '\n')
     f.write('S-phase fn = ' + str(s_fn) + '\n')
     
+    print(args.dataset + ' dataset')
+    print(args.dataset + ' dataset')
+    print(args.dataset + ' dataset')
     print('==================================================')
     print('Threshold = ' + str(threshold))
     print('P-phase precision = ' + str(p_precision))

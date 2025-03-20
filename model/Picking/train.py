@@ -43,6 +43,9 @@ print("Init Complete!!!")
 # GetDataset
 start_time = time.time()
 train,dev,test = get_dataset(args)
+
+sys.exit()
+
 end_time = time.time()
 elapsed_time = end_time - start_time
 print("=====================================================")

@@ -36,12 +36,13 @@ def parse_arguments():
 def get_dataset(args):
 
     data_path = "/mnt/nas5/johnn9/dataset/"
+    seis_path = "/mnt/nas5/johnn9/seisbench_cache/datasets/"
     cwb_path = data_path + "cwbsn/"
     tsm_path = data_path + "tsmip/"
     noi_path = data_path + "cwbsn_noise/"
     stead_path = data_path + "stead/"
-    ins_path = data_path + "instancecounts/"
-    insnoi_path = data_path + "instancenoise/"
+    ins_path = seis_path + "instancecounts/"
+    insnoi_path = seis_path + "instancenoise/"
 
     if args.dataset == 'tw':
         cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
@@ -67,6 +68,19 @@ def get_dataset(args):
             train = c_train + t_train + n_train
             dev = c_dev + t_dev + n_dev
             test = c_test + t_test + n_test
+
+            print('c_train = ', c_train)
+            print('c_dev = ', c_dev)
+            print('c_test = ', c_test)
+            print('t_train = ', t_train)
+            print('t_dev = ', t_dev)
+            print('t_test = ', t_test)
+            print('n_train = ', n_train)
+            print('n_dev = ', n_dev)
+            print('n_test = ', n_test)
+
+    
+
         elif args.noise_need == 'false':
             train = c_train + t_train
             dev = c_dev + t_dev
@@ -76,11 +90,14 @@ def get_dataset(args):
         print('t_train = ', len(t_train))
         if args.noise_need == 'true':
             print('n_train = ', len(n_train))
+
     elif args.dataset == 'stead':
         stead = sbd.WaveformDataset(stead_path, sampling_rate=100)
         train, dev, test = stead.train_dev_test()
         print('stead dataset')
         print('train = ', len(train))
+        print('dev = ', len(dev))
+        print('test = ', len(test))
 
     elif args.dataset == 'hualien':
         data_4_3_path = "/mnt/nas5/johnn9/CWBSN_seisbench"
@@ -100,5 +117,298 @@ def get_dataset(args):
         dev = i_dev + in_dev
         test = i_test + in_test
         print('train = ', len(train))
+
+    elif args.dataset == '664':
+        data_664_path = "/mnt/nas5/johnn9/seisbench_cache/datasets/cwbsn/"
+        test = sbd.WaveformDataset(data_664_path, sampling_rate=100)
+        magmask = test.metadata['source_magnitude'] == 6.64
+        test.filter(magmask)
+        train = test
+        dev = test
+        print("hualine = ",len(test))
+
+    elif args.dataset == '0to25': 
+        num1 = 0
+        num2 = 25
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+
+    elif args.dataset == '25to50':
+        num1 = 25
+        num2 = 50
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+
+    elif args.dataset == '50to75':
+        num1 = 50
+        num2 = 75
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+
+    elif args.dataset == '75to100':
+        num1 = 75   
+        num2 = 100
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+
+    elif args.dataset == '100to125':
+        num1 = 100   
+        num2 = 125
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+
+    elif args.dataset == '125to150':
+        num1 = 125   
+        num2 = 150
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+        
+    elif args.dataset == '150to175':
+        num1 = 150   
+        num2 = 175
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+        
+    elif args.dataset == '175to200':
+        num1 = 175     
+        num2 = 200
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+        
+    elif args.dataset == '200to225':
+        num1 = 200   
+        num2 = 225
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+        
+    elif args.dataset == '225to250':
+        num1 = 225   
+        num2 = 250
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (num1 <= cwb.metadata["path_ep_distance_km"]) & (cwb.metadata["path_ep_distance_km"] <= num2)
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (num1 <= tsm.metadata["path_ep_distance_km"]) & (tsm.metadata["path_ep_distance_km"] <= num2)
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
+        
+    elif args.dataset == '250up':
+
+        cwb = sbd.WaveformDataset(cwb_path, sampling_rate=100)
+        c_mask = cwb.metadata["trace_completeness"] == 4
+        cwb.filter(c_mask)
+        c_mask1 = (250 <= cwb.metadata["path_ep_distance_km"])
+        cwb.filter(c_mask1)
+
+        tsm = sbd.WaveformDataset(tsm_path, sampling_rate=100)
+        t_mask = tsm.metadata["trace_completeness"] == 1
+        tsm.filter(t_mask)
+        t_mask1 = (250 <= tsm.metadata["path_ep_distance_km"])
+        tsm.filter(t_mask1)
+        
+        _, _, c_test = cwb.train_dev_test()
+        _, _, t_test = tsm.train_dev_test()
+        test = c_test + t_test
+        train = test
+        dev = test
+        print(args.dataset + ' dataset')
+        print('c_test = ', len(c_test))
+        print('t_test = ', len(t_test))
+        print('test = ', len(test))
         
     return train,dev,test

@@ -5,18 +5,18 @@ import math
 import sys
 
 sys.path.append('../')
-# from wav2vec2 import Wav2Vec2Model,Wav2Vec2Config
+from wav2vec2 import Wav2Vec2Model,Wav2Vec2Config
 # from ws_wav2vec2 import Wav2Vec2Model,Wav2Vec2Config
 # from data2vec1 import Data2VecAudioModel, Data2VecAudioConfig
-from ws_data2vec import Data2VecAudioModel, Data2VecAudioConfig
+# from ws_data2vec import Data2VecAudioModel, Data2VecAudioConfig
 
 
 class Wav2vec_Pick(nn.Module):
     def __init__(self, args, decoder_type, device, checkpoint_path='../../checkpoint.pt'):
         super().__init__()
 
-        # self.w2v = Wav2Vec2Model(Wav2Vec2Config)
-        self.w2v = Data2VecAudioModel(Data2VecAudioConfig)
+        self.w2v = Wav2Vec2Model(Wav2Vec2Config)
+        # self.w2v = Data2VecAudioModel(Data2VecAudioConfig)
         
         self.args = args
         if checkpoint_path != 'None':

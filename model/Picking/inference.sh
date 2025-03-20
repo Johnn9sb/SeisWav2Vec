@@ -14,15 +14,15 @@
 CUDA_VISIBLE_DEVICES=0,1 \
 exec -a Johnn9_Finetune \
 python inference.py \
---model_name '3_4_lem50000_wei_cnn' \
---train_model 'wav2vec2' \
+--model_name 'phasenet_1000' \
+--train_model 'lempick_frez_cnn' \
 --batch_size 1 \
 --num_workers 4 \
 --decoder_type 'cnn' \
 --parl 'y' \
 --task 'pick' \
---threshold 0.4 \
---weighted_sum 'y'\
+--threshold 0.3 \
+--weighted_sum 'n'\
 
 # --test_mode 'true' \
 

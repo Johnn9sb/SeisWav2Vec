@@ -81,7 +81,7 @@ def load_dataset(opt):
     if opt.dataset_opt == 'instance' or opt.dataset_opt == 'all':
         print('loading INSTANCE')
         kwargs={'download_kwargs': {'basepath': '/home/weiwei/disk4/seismic_datasets/'}}
-        instance = sbd.InstanceCountsCombined(**kwargs)
+        instance = sbd.InstanceCounts(**kwargs)
 
         instance = apply_filter(instance, isINSTANCE=True, filter_instance=opt.filter_instance,
                             epidis=opt.epidis, snr=opt.snr, without_noise=opt.without_noise)
@@ -263,7 +263,7 @@ def load_model(opt, device):
         model = Wav2Vec_Mag(decoder_type=opt.decoder_type, device=device, wavelength=opt.wavelength, checkpoint_path=opt.w2v_path)
     elif opt.model_opt == 'magnet':
         model = MagNet()
-
+# 
     return model.to(device)
     # return BalancedDataParallel(32, model.to(device))
 
