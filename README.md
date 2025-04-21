@@ -1,12 +1,12 @@
 ![](https://img.shields.io/static/v1?label=python&message=>3.8&color=yellow)
-# Training a Earthquake Pre-trained Model: An Investigation and Its Applications in Seismology
-PyTorch implementation of "Earthquake Waveform Pre-trained Model" with Fairseq.
+# SeisWav2Vec: A Contrastive Self-Supervised Framework for Scalable Time-Domain Seismic Representation Learning
+PyTorch implementation of "SeisWav2Vec" with Fairseq.
 
 This implementation is currently designed for inference purposes only and is not intended for training.
 Please note that the current version supports inference functionalities exclusively.
 
-## Introduction
-Earthquake monitoring and warning are critical for disaster early warning systems. While deep learning has been extensively studied in this field, the application of **self-supervised learning** remains relatively unexplored. Self-supervised learning can learn useful representations without requiring extensive labeled data, and models trained in this way can be fine-tuned for specific tasks with better efficiency.
+## Abstract
+Earthquake monitoring and early warning systems are critical for disaster preparedness and risk mitigation. Inspired by the success of self-supervised pretraining in fields such as natural language and speech processing, we propose SeisWav2Vec, a self-supervised framework designed to learn generalizable representations from raw seismic waveforms without the need for labeled data. SeisWav2Vec adopts a contrastive masked predic- tion objective to capture temporally rich features and is pretrained on large-scale unlabeled seismic datasets. Once pretrained, the model can be efficiently fine-tuned for a variety of downstream tasks, substantially reducing the dependency on annotated data. To evaluate its effectiveness, we apply SeisWav2Vec to two representative tasks: P-phase picking and earthquake magnitude estimation. Experimental results show that our fine-tuned models not only outperform advanced baselines but also maintain robust performance even under extremely low-resource conditions, using as little as 0.01% of labeled training data. Additionally, SeisWav2Vec exhibits strong generalization across domains and offers a scalable, label-efficient solution for seismic signal processing.
 
 ## Proposed Model
 We propose a **Large Earthquake Model (LEM)** to evaluate the effectiveness of self-supervised learning in earthquake-related tasks, focusing on **p-phase picking** and **magnitude estimation**.
